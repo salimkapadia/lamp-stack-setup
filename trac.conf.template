@@ -1,0 +1,30 @@
+<VirtualHost *:80>
+        ServerAdmin TRAC_SERVER_ADMIN_EMAIL
+        Servername TRAC_SERVER_NAME
+        DocumentRoot TRAC_DOCUMENT_ROOT
+
+        <Location />
+           SetHandler mod_python
+           PythonInterpreter main_interpreter
+           PythonHandler trac.web.modpython_frontend
+           PythonOption TracEnv TRAC_DOCUMENT_ROOT
+           PythonOption TracEnvParentDir TRAC_REPOSITORIES_PATH
+           PythonOption TracUriRoot /
+           PythonOption TracLocale en_US.UTF8
+           PythonOption PYTHON_EGG_CACHE /tmp
+           Order allow,deny
+           Allow from all
+        </Location>
+
+   # Authenticate the user
+   <Location /login>
+                AuthType Basic
+                AuthName "Trac"
+                Require valid-user
+
+                AuthUserFile TRAC_AUTH_FILE_PATH
+   </Location>
+
+        CustomLog /var/log/apache2/access.log combined
+        ErrorLog /var/log/apache2/error.log
+</VirtualHost>               

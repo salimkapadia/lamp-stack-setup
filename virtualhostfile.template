@@ -1,0 +1,42 @@
+#
+# This apache configuration file is used to setup the tools site.
+# It is used in conjunction with a batch script which does a string replacement and then
+# setup's the apache site.
+#
+
+#
+#  HOST_NAME_GOES_HERE (/etc/apache2/sites-available/HOST_NAME_GOES_HERE)
+#
+<VirtualHost *:80>
+        ServerAdmin SERVER_ADMIN_EMAIL
+        Servername SERVER_NAME        
+        ServerAlias HOST_NAME_ALIAS_GOES_HERE
+
+        DocumentRoot SITE_DOCUMENT_ROOT
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+
+        <Directory SITE_LOCATION>
+                SetEnv APPLICATION_ENV APPLICATION_ENV_GOES_HERE
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                DirectoryIndex index.php index.html
+                Order allow,deny
+                allow from all
+        </Directory>
+
+      # Deny access to .svn directories
+      <Directory ~ "\.svn">
+              Order allow,deny
+              Deny from all
+      </Directory>
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+
+        ErrorLog LOG_FILE_LOCATION/error.log
+        CustomLog LOG_FILE_LOCATION/access.log combined
+</VirtualHost>        
