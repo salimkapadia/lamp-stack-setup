@@ -127,15 +127,18 @@ SCRIPTNAME=`basename $0`
         pecl install xdebug
     
     echo "----------------------------------" 1>&2
-    echo "   zend  setup version 1.11.12" 1>&2
+    echo "   zend  setup version 1.12.0" 1>&2
     echo "----------------------------------" 1>&2
     # download zend, unzip, move, and clean up
         cd /tmp
 	wget http://packages.zendframework.com/releases/ZendFramework-1.12.0/ZendFramework-1.12.0.tar.gz
-        tar xf ZendFramework-1.12.0.tar.gz
-        mv /tmp/ZendFramework-1.12.0/library/Zend $ZEND_PATH
+        tar xf ZendFramework-1.12.0.tar.gz	
+        mv /tmp/ZendFramework-1.12.0 $LIB_PATH
+	ln -s $LIB_PATH/ZendFramework-1.12.0/library/Zend $ZEND_PATH
+	ln -s $LIB_PATH/ZendFramework-1.12.0/bin/zf.sh $BIN_PATH/zf
         rm ZendFramework-1.12.0.tar.gz;
-        rm -rf ZendFramework-1.12.0/
+	rm -rf ZendFramework-1.12.0/
+
 
     echo "----------------------------------" 1>&2
     echo "   Doctrine setup " 1>&2
@@ -196,6 +199,8 @@ SCRIPTNAME=`basename $0`
 	echo "" >> /etc/hosts
 	echo "127.0.0.1	$SERVER_NAME" >> /etc/hosts
 
+	# Activate mod rewrite
+	a2enmod rewrite
 
     echo "----------------------------------" 1>&2
     echo "   Restart of apache " 1>&2

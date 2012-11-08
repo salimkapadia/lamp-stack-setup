@@ -61,18 +61,22 @@ SCRIPTNAME=`basename $0`
     echo "   Creating default directories   " 1>&2
     echo "----------------------------------" 1>&2   
 
-    mkdir -p $USER_HOME_DIRECTORY/$USER_PROJECT_DIRECTORY
-    chown $1:$USER_GROUP -R $USER_HOME_DIRECTORY/$USER_PROJECT_DIRECTORY
-
     mkdir -p $USER_HOME_DIRECTORY/$USER_PROJECT_DIRECTORY/trunk
-    chown $1:$USER_GROUP -R $USER_HOME_DIRECTORY/$USER_PROJECT_DIRECTORY/trunk
-
     mkdir -p $USER_HOME_DIRECTORY/logs 
-    chown $1:$USER_GROUP -R $USER_HOME_DIRECTORY/logs
+    
+    touch $USER_HOME_DIRECTORY/logs/access.log
+    touch $USER_HOME_DIRECTORY/logs/error.log
+    
+    chmod 777 -R $USER_HOME_DIRECTORY/logs
 
     mkdir -p $USER_HOME_DIRECTORY/sandbox/library
-    chown $1:$USER_GROUP -R $USER_HOME_DIRECTORY/sandbox
-    chown $1:$USER_GROUP -R $USER_HOME_DIRECTORY/sandbox/library
+    
+
+    touch $USER_HOME_DIRECTORY/.bash_profile
+    echo "ZEND_TOOL_INCLUDE_PATH=$ZEND_PATH" >> $USER_HOME_DIRECTORY/.bash_profile
+    echo "export ZEND_TOOL_INCLUDE_PATH" >> $USER_HOME_DIRECTORY/.bash_profile
+
+    chown $1:$USER_GROUP -R $USER_HOME_DIRECTORY
 
     echo "----------------------------------" 1>&2
     echo "   User setup complete" 1>&2
