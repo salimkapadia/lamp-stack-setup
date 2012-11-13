@@ -137,19 +137,22 @@ SCRIPTNAME=`basename $0`
 	ln -s $LIB_PATH/ZendFramework-1.12.0/library/Zend $ZEND_PATH
 	ln -s $LIB_PATH/ZendFramework-1.12.0/bin/zf.sh $BIN_PATH/zf
         rm ZendFramework-1.12.0.tar.gz;
-	rm -rf ZendFramework-1.12.0/
 
+    echo "----------------------------------" 1>&2
+    echo "   Composer setup" 1>&2
+    echo "----------------------------------" 1>&2    
+	curl -s https://getcomposer.org/installer | sudo php -- --install-dir="$BIN_PATH"
 
     echo "----------------------------------" 1>&2
     echo "   Doctrine setup " 1>&2
     echo "----------------------------------" 1>&2
     # download doctrine unzip, move, and clean up
         cd /tmp;
-        wget http://www.doctrine-project.org/downloads/DoctrineORM-2.0.5-full.tar.gz
-        tar xf DoctrineORM-2.0.5-full.tar.gz
-        mv /tmp/doctrine-orm/Doctrine $DOCTRINE_PATH
-        rm -rf doctrine-orm
-        rm DoctrineORM-2.0.5-full.tar.gz
+        wget http://www.doctrine-project.org/downloads/DoctrineORM-2.3.0-full.tar.gz
+        tar xf DoctrineORM-2.3.0-full.tar.gz
+        mv /tmp/DoctrineORM-2.3.0/Doctrine $DOCTRINE_PATH
+        rm -rf DoctrineORM-2.3.0
+        rm DoctrineORM-2.3.0-full.tar.gz
 
     echo "----------------------------------" 1>&2
     echo "   Doctrine extension " 1>&2
